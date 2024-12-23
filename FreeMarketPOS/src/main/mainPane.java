@@ -2,11 +2,13 @@ package main;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -17,13 +19,13 @@ public class mainPane extends JPanel{
 	private DefaultTableModel tableModel;
 	
 	public mainPane() {
-		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		String[] columnNames = {"Product ID", "Product Name", "Product Qty", "Total Price"};
 		
 		Font dataFont = new Font("Arial", Font.PLAIN, 15);
+		Font currentProductFont = new Font("Arial", Font.ITALIC, 30);
 		
 		String[][] data = {
 				{"00001", "All Purpose Cream", "5", String.valueOf(5 * 48)},
@@ -43,6 +45,16 @@ public class mainPane extends JPanel{
 		tableModel.addRow(new Object[] {"00002", "Graham Crackers", "7", String.valueOf(7 * 60)});
 		tableModel.addRow(new Object[] {"00003", "Brown Sugar", "2", String.valueOf(2 * 110)});
 		
+		FlowLayout currProdLayout = new FlowLayout(FlowLayout.LEFT);
+		
+		JPanel currentProduct = new JPanel(currProdLayout);
+		currentProduct.setPreferredSize(new Dimension(0, 200));
+		
+		JLabel productLabel = new JLabel("Brown Sugar      " + " 2" + "     220");
+		productLabel.setFont(currentProductFont);
+		
+		currentProduct.add(productLabel);
+		
 		gbc.insets = new Insets(5, 5, 5, 5);
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = 1.0;
@@ -51,6 +63,9 @@ public class mainPane extends JPanel{
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		this.add(tableContainer, gbc);
+	
+		gbc.gridy = 1;
+		this.add(currentProduct, gbc);
 	}
 	public void clearData() {
 		tableModel.setRowCount(0);
